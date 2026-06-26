@@ -127,147 +127,160 @@ class MachineCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          '/machine-details',
+        );
+      },
 
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(28),
+      child: Container(
+        padding: const EdgeInsets.all(20),
 
-        border: Border.all(
-          color: Colors.grey.shade300,
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(28),
+
+          border: Border.all(
+            color: Colors.grey.shade300,
+          ),
+
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
 
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
 
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 22,
+                  backgroundColor:
+                      const Color(0xFFE8F0FE),
 
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 22,
-                backgroundColor:
-                    const Color(0xFFE8F0FE),
-
-                child: const Icon(
-                  Icons.local_shipping_outlined,
-                  color: Color(0xFF2563EB),
+                  child: const Icon(
+                    Icons.local_shipping_outlined,
+                    color: Color(0xFF2563EB),
+                  ),
                 ),
+
+                const Spacer(),
+
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+
+                  decoration: BoxDecoration(
+                    color: statusColor.withOpacity(0.15),
+                    borderRadius:
+                        BorderRadius.circular(30),
+                  ),
+
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 3,
+                        backgroundColor: statusColor,
+                      ),
+
+                      const SizedBox(width: 6),
+
+                      Text(
+                        status,
+                        style: TextStyle(
+                          color: statusColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 18),
+
+            Text(
+              name,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
               ),
+            ),
 
-              const Spacer(),
+            const SizedBox(height: 4),
 
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
+            Text(
+              subtitle,
+              style: TextStyle(
+                color: Colors.grey.shade600,
+                fontSize: 14,
+              ),
+            ),
 
-                decoration: BoxDecoration(
-                  color: statusColor.withOpacity(0.15),
-                  borderRadius:
-                      BorderRadius.circular(30),
-                ),
+            const SizedBox(height: 22),
 
-                child: Row(
+            Row(
+              children: [
+                Row(
                   children: [
-                    CircleAvatar(
-                      radius: 3,
-                      backgroundColor: statusColor,
+                    Icon(
+                      Icons.local_gas_station_outlined,
+                      size: 18,
+                      color: Colors.grey.shade600,
                     ),
 
                     const SizedBox(width: 6),
 
                     Text(
-                      status,
+                      fuel,
                       style: TextStyle(
-                        color: statusColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
+                        color: Colors.grey.shade700,
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
-          ),
 
-          const SizedBox(height: 18),
+                const SizedBox(width: 40),
 
-          Text(
-            name,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-
-          const SizedBox(height: 4),
-
-          Text(
-            subtitle,
-            style: TextStyle(
-              color: Colors.grey.shade600,
-              fontSize: 14,
-            ),
-          ),
-
-          const SizedBox(height: 22),
-
-          Row(
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.local_gas_station_outlined,
-                    size: 18,
-                    color: Colors.grey.shade600,
-                  ),
-
-                  const SizedBox(width: 6),
-
-                  Text(
-                    fuel,
-                    style: TextStyle(
-                      color: Colors.grey.shade700,
+                Row(
+                  children: [
+                    Icon(
+                      Icons.access_time_outlined,
+                      size: 18,
+                      color: Colors.grey.shade600,
                     ),
-                  ),
-                ],
-              ),
 
-              const SizedBox(width: 40),
+                    const SizedBox(width: 6),
 
-              Row(
-                children: [
-                  Icon(
-                    Icons.access_time_outlined,
-                    size: 18,
-                    color: Colors.grey.shade600,
-                  ),
-
-                  const SizedBox(width: 6),
-
-                  Text(
-                    hours,
-                    style: TextStyle(
-                      color: Colors.grey.shade700,
+                    Text(
+                      hours,
+                      style: TextStyle(
+                        color: Colors.grey.shade700,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+
+
+

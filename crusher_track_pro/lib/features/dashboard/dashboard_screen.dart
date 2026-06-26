@@ -1,158 +1,155 @@
 import 'package:flutter/material.dart';
 import '../../core/widgets/app_drawer.dart';
-import '../../main.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final isDark =
-        Theme.of(context).brightness == Brightness.dark;
-
     return Scaffold(
       drawer: const AppDrawer(),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
-      backgroundColor:
-          Theme.of(context).scaffoldBackgroundColor,
+     appBar: AppBar(
+  elevation: 0,
+  backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+surfaceTintColor: Colors.transparent,
 
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor:
-            Theme.of(context).appBarTheme.backgroundColor,
-        surfaceTintColor: Colors.transparent,
-
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: Icon(
-              Icons.menu,
-              color: Theme.of(context).iconTheme.color,
-            ),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          ),
-        ),
-
-        title: Text(
-          "Dashboard",
-          style: TextStyle(
-            color: Theme.of(context)
-                .textTheme
-                .bodyLarge
-                ?.color,
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
-        ),
-
-        actions: [
-          PopupMenuButton<String>(
-            icon: Icon(
-              Icons.translate_outlined,
-              color: Theme.of(context).iconTheme.color,
-            ),
-            itemBuilder: (context) => const [
-              PopupMenuItem(
-                value: 'en',
-                child: Text('English'),
-              ),
-              PopupMenuItem(
-                value: 'fr',
-                child: Text('Français'),
-              ),
-              PopupMenuItem(
-                value: 'ar',
-                child: Text('العربية'),
-              ),
-            ],
-          ),
-
-          PopupMenuButton<String>(
-            icon: Icon(
-              Icons.dark_mode_outlined,
-              color: Theme.of(context).iconTheme.color,
-            ),
-
-            onSelected: (value) {
-              if (value == 'light') {
-                CrusherTrackApp.of(context)
-                    .changeTheme(ThemeMode.light);
-              }
-
-              if (value == 'dark') {
-                CrusherTrackApp.of(context)
-                    .changeTheme(ThemeMode.dark);
-              }
-
-              if (value == 'system') {
-                CrusherTrackApp.of(context)
-                    .changeTheme(ThemeMode.system);
-              }
-            },
-
-            itemBuilder: (context) => const [
-              PopupMenuItem(
-                value: 'light',
-                child: Text('Light'),
-              ),
-              PopupMenuItem(
-                value: 'dark',
-                child: Text('Dark'),
-              ),
-              PopupMenuItem(
-                value: 'system',
-                child: Text('System'),
-              ),
-            ],
-          ),
-
-          Padding(
-            padding: const EdgeInsets.only(
-              right: 16,
-              left: 8,
-            ),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  '/profile',
-                );
-              },
-
-              child: const CircleAvatar(
-                radius: 18,
-                backgroundColor: Color(0xFFE3F2FD),
-
-                child: Text(
-                  "KH",
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+  leading: Builder(
+    builder: (context) => IconButton(
+      icon: const Icon(
+        Icons.menu,
+        color: Colors.black87,
       ),
+      onPressed: () {
+        Scaffold.of(context).openDrawer();
+      },
+    ),
+  ),
+
+  title: const Text(
+    "Dashboard",
+    style: TextStyle(
+      color: Colors.black87,
+      fontWeight: FontWeight.w600,
+      fontSize: 20,
+    ),
+  ),
+
+  actions: [
+    // Language Button
+    PopupMenuButton<String>(
+      icon: const Icon(
+        Icons.translate_outlined,
+        color: Colors.black87,
+      ),
+
+      onSelected: (value) {
+        // TODO: Change language
+      },
+
+      itemBuilder: (context) => const [
+        PopupMenuItem(
+          value: 'en',
+          child: Text('English'),
+        ),
+        PopupMenuItem(
+          value: 'fr',
+          child: Text('Français'),
+        ),
+        PopupMenuItem(
+          value: 'ar',
+          child: Text('العربية'),
+        ),
+      ],
+    ),
+
+    // Theme Button
+    PopupMenuButton<String>(
+      icon: const Icon(
+        Icons.dark_mode_outlined,
+        color: Colors.black87,
+      ),
+
+      onSelected: (value) {
+        // TODO: Change theme
+      },
+
+      itemBuilder: (context) => const [
+        PopupMenuItem(
+          value: 'light',
+          child: Row(
+            children: [
+              Icon(Icons.light_mode),
+              SizedBox(width: 10),
+              Text('Light'),
+            ],
+          ),
+        ),
+
+        PopupMenuItem(
+          value: 'dark',
+          child: Row(
+            children: [
+              Icon(Icons.dark_mode),
+              SizedBox(width: 10),
+              Text('Dark'),
+            ],
+          ),
+        ),
+
+        PopupMenuItem(
+          value: 'system',
+          child: Row(
+            children: [
+              Icon(Icons.desktop_windows),
+              SizedBox(width: 10),
+              Text('System'),
+            ],
+          ),
+        ),
+      ],
+    ),
+
+    // Profile Avatar
+    Padding(
+      padding: const EdgeInsets.only(
+        right: 16,
+        left: 8,
+      ),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/profile');
+        },
+
+        child: const CircleAvatar(
+          radius: 18,
+          backgroundColor: Color(0xFFE3F2FD),
+
+          child: Text(
+            "KH",
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    ),
+  ],
+),
 
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-
           children: [
-            Text(
+            const Text(
               "Operations Dashboard",
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.color,
               ),
             ),
 
@@ -170,9 +167,7 @@ class DashboardScreen extends StatelessWidget {
 
             GridView.count(
               shrinkWrap: true,
-              physics:
-                  const NeverScrollableScrollPhysics(),
-
+              physics: const NeverScrollableScrollPhysics(),
               crossAxisCount: 2,
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
@@ -182,8 +177,7 @@ class DashboardScreen extends StatelessWidget {
                 DashboardCard(
                   title: "Projects",
                   value: "12",
-                  icon:
-                      Icons.business_center_outlined,
+                  icon: Icons.business_center_outlined,
                   color: Colors.blue,
                 ),
 
@@ -204,8 +198,7 @@ class DashboardScreen extends StatelessWidget {
                 DashboardCard(
                   title: "Machines",
                   value: "23",
-                  icon: Icons
-                      .precision_manufacturing,
+                  icon: Icons.precision_manufacturing,
                   color: Colors.purple,
                 ),
               ],
@@ -213,15 +206,11 @@ class DashboardScreen extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            Text(
+            const Text(
               "Project Overview",
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.color,
               ),
             ),
 
@@ -233,15 +222,11 @@ class DashboardScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20),
 
               decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-
-                borderRadius:
-                    BorderRadius.circular(20),
-
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color:
-                        Colors.grey.withOpacity(0.15),
+                    color: Colors.grey.withValues(alpha: 0.15),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -250,15 +235,11 @@ class DashboardScreen extends StatelessWidget {
 
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     "Overall Progress",
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
-                      color: Theme.of(context)
-                          .textTheme
-                          .bodyLarge
-                          ?.color,
                     ),
                   ),
 
@@ -266,31 +247,25 @@ class DashboardScreen extends StatelessWidget {
 
                   Stack(
                     alignment: Alignment.center,
+
                     children: [
                       SizedBox(
                         width: 120,
                         height: 120,
 
-                        child:
-                            CircularProgressIndicator(
+                        child: CircularProgressIndicator(
                           value: 0.72,
                           strokeWidth: 12,
-                          backgroundColor:
-                              Colors.grey.shade300,
+                          backgroundColor: Colors.grey.shade200,
                           color: Colors.green,
                         ),
                       ),
 
-                      Text(
+                      const Text(
                         "72%",
                         style: TextStyle(
                           fontSize: 26,
-                          fontWeight:
-                              FontWeight.bold,
-                          color: Theme.of(context)
-                              .textTheme
-                              .bodyLarge
-                              ?.color,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
@@ -301,26 +276,20 @@ class DashboardScreen extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            Text(
+            const Text(
               "Recent Activity",
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.color,
               ),
             ),
 
             const SizedBox(height: 12),
 
             const ActivityTile(
-              icon:
-                  Icons.local_shipping_outlined,
+              icon: Icons.local_shipping_outlined,
               title: "Fuel expense added",
-              subtitle:
-                  "Loader 01 • 50,000 DZD",
+              subtitle: "Loader 01 • 50,000 DZD",
             ),
 
             const ActivityTile(
@@ -367,14 +336,12 @@ class DashboardCard extends StatelessWidget {
       padding: const EdgeInsets.all(18),
 
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-
-        borderRadius:
-            BorderRadius.circular(20),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
 
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.12),
+            color: Colors.grey.withValues(alpha: 0.12),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -382,14 +349,12 @@ class DashboardCard extends StatelessWidget {
       ),
 
       child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
           CircleAvatar(
             radius: 22,
-            backgroundColor:
-                color.withOpacity(0.15),
+            backgroundColor: color.withValues(alpha: 0.15),
 
             child: Icon(
               icon,
@@ -401,13 +366,9 @@ class DashboardCard extends StatelessWidget {
 
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.color,
             ),
           ),
 
@@ -437,24 +398,17 @@ class ActivityTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark =
-        Theme.of(context).brightness ==
-            Brightness.dark;
-
     return Card(
       margin: const EdgeInsets.only(bottom: 10),
       elevation: 0,
 
       shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16),
       ),
 
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: isDark
-              ? Colors.blueGrey.shade800
-              : Colors.blue.shade50,
+          backgroundColor: Colors.blue.shade50,
 
           child: Icon(
             icon,

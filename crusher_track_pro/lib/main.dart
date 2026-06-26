@@ -9,10 +9,27 @@ import 'features/machines/machines_screen.dart';
 import 'features/employees/employees_screen.dart';
 import 'features/profile/profile_screen.dart';
 import 'features/notifications/notifications_screen.dart';
-void main() {
-  runApp(const CrusherTrackApp());
-}
+import 'features/machines/machine_details_screen.dart';
+import 'package:provider/provider.dart';
+import '../providers/project_provider.dart';
 
+import 'providers/auth_provider.dart';
+void main() {
+  runApp(
+    MultiProvider(
+      providers: [
+  ChangeNotifierProvider(
+    create: (_) => AuthProvider(),
+  ),
+
+  ChangeNotifierProvider(
+    create: (_) => ProjectProvider(),
+  ),
+],
+      child: const CrusherTrackApp(),
+    ),
+  );
+}
 class CrusherTrackApp extends StatefulWidget {
   const CrusherTrackApp({super.key});
 
@@ -45,7 +62,7 @@ class _CrusherTrackAppState extends State<CrusherTrackApp> {
       themeMode: themeMode,
 
       // Initial page
-      home: const DashboardScreen(),
+      home: const LoginScreen(),
 
       // App routes
       routes: {
@@ -58,6 +75,8 @@ class _CrusherTrackAppState extends State<CrusherTrackApp> {
     '/machines': (context) => const MachinesScreen(),
     '/profile': (context) => const ProfileScreen(),
     '/notifications': (context) => const NotificationsScreen(),
+    '/machine-details': (context) =>
+    const MachineDetailsScreen(),
       },
     );
   }

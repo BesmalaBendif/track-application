@@ -76,7 +76,7 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
 
-            // Scrollable menu
+            // Menu
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.symmetric(
@@ -88,12 +88,12 @@ class AppDrawer extends StatelessWidget {
                     icon: Icons.dashboard_outlined,
                     title: "Dashboard",
                     route: '/dashboard',
-                    selected: true,
                   ),
 
                   _drawerItem(
                     context,
-                    icon: Icons.business_center_outlined,
+                    icon:
+                        Icons.business_center_outlined,
                     title: "Projects",
                     route: '/projects',
                   ),
@@ -107,7 +107,8 @@ class AppDrawer extends StatelessWidget {
 
                   _drawerItem(
                     context,
-                    icon: Icons.local_shipping_outlined,
+                    icon:
+                        Icons.local_shipping_outlined,
                     title: "Machines",
                     route: '/machines',
                   ),
@@ -135,7 +136,8 @@ class AppDrawer extends StatelessWidget {
 
                   _drawerItem(
                     context,
-                    icon: Icons.notifications_none_outlined,
+                    icon:
+                        Icons.notifications_none_outlined,
                     title: "Notifications",
                     route: '/notifications',
                   ),
@@ -157,7 +159,7 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
 
-            // Bottom section
+            // Bottom Section
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 14,
@@ -167,6 +169,11 @@ class AppDrawer extends StatelessWidget {
                   const Divider(),
 
                   ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(16),
+                    ),
+
                     leading: const Icon(
                       Icons.logout,
                       color: Colors.red,
@@ -178,10 +185,15 @@ class AppDrawer extends StatelessWidget {
                         color: Colors.red,
                       ),
                     ),
+onTap: () {
+  Navigator.pop(context);
 
-                    onTap: () {
-                      // TODO: Logout
-                    },
+  Navigator.pushNamedAndRemoveUntil(
+    context,
+    '/login', // or '/signin' depending on your route name
+    (route) => false,
+  );
+},
                   ),
 
                   const SizedBox(height: 10),
@@ -199,8 +211,13 @@ class AppDrawer extends StatelessWidget {
     required IconData icon,
     required String title,
     required String route,
-    bool selected = false,
   }) {
+    // Detect current route
+    final String currentRoute =
+        ModalRoute.of(context)?.settings.name ?? '';
+
+    final bool selected = currentRoute == route;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 6),
 
@@ -212,17 +229,22 @@ class AppDrawer extends StatelessWidget {
       ),
 
       child: ListTile(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+
         leading: Icon(
           icon,
-          color:
-              selected ? Colors.blue : Colors.grey.shade700,
+          color: selected
+              ? const Color(0xFF2563EB)
+              : Colors.grey.shade700,
         ),
 
         title: Text(
           title,
           style: TextStyle(
             color: selected
-                ? Colors.blue
+                ? const Color(0xFF2563EB)
                 : Colors.grey.shade800,
             fontWeight: selected
                 ? FontWeight.w600
@@ -232,7 +254,14 @@ class AppDrawer extends StatelessWidget {
 
         onTap: () {
           Navigator.pop(context);
-          Navigator.pushNamed(context, route);
+
+          // Prevent reopening same page
+          if (!selected) {
+            Navigator.pushReplacementNamed(
+              context,
+              route,
+            );
+          }
         },
       ),
     );
